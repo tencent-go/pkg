@@ -1,0 +1,33 @@
+name: Auto Tag
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create semantic version tag
+        id: tag
+        uses: google-internal/action-semtag@v1
+        with:
+          prefix: 'v'
+          branch-suffix: 'develop:beta'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Print version info
+        if: steps.tag.outputs.created == 'true'
+        run: |
+          echo "✅ New version created: ${{ steps.tag.outputs.version }}"
+          echo "📦 Tag: ${{ steps.tag.outputs.tag }}"
+
