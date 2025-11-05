@@ -72,7 +72,7 @@ func (c *Config) runValidators(value reflect.Value, labels ...string) errx.Error
 	}
 	if c.mapConfig != nil && value.Kind() == reflect.Map {
 		for _, key := range value.MapKeys() {
-			l := labels
+			var l []string
 			{
 				k, e := dereference(key)
 				if e != nil {

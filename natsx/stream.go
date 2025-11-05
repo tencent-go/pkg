@@ -8,10 +8,10 @@ import (
 
 	"github.com/tencent-go/pkg/errx"
 
-	"github.com/tencent-go/pkg/ctxx"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
 	"github.com/sirupsen/logrus"
+	"github.com/tencent-go/pkg/ctxx"
 )
 
 func NewStreamBuilder(streamName string) StreamBuilder {
@@ -146,133 +146,5 @@ func (s *stream) Conn() *nats.Conn {
 }
 
 func compareStreamConfig(c1, c2 jetstream.StreamConfig) bool {
-	if c1.Name != c2.Name {
-		return false
-	}
-	if c1.Description != c2.Description {
-		return false
-	}
-	if len(c1.Subjects) != len(c2.Subjects) {
-		return false
-	}
-	for i := range c1.Subjects {
-		if c1.Subjects[i] != c2.Subjects[i] {
-			return false
-		}
-	}
-	if c1.Retention != c2.Retention {
-		return false
-	}
-	if c1.MaxConsumers != c2.MaxConsumers {
-		return false
-	}
-	if c1.MaxMsgs != c2.MaxMsgs {
-		return false
-	}
-	if c1.MaxBytes != c2.MaxBytes {
-		return false
-	}
-	if c1.Discard != c2.Discard {
-		return false
-	}
-	if c1.DiscardNewPerSubject != c2.DiscardNewPerSubject {
-		return false
-	}
-	if c1.MaxAge != c2.MaxAge {
-		return false
-	}
-	if c1.MaxMsgsPerSubject != c2.MaxMsgsPerSubject {
-		return false
-	}
-	if c1.MaxMsgSize != c2.MaxMsgSize {
-		return false
-	}
-	if c1.Storage != c2.Storage {
-		return false
-	}
-	if c1.Replicas != c2.Replicas {
-		return false
-	}
-	if c1.NoAck != c2.NoAck {
-		return false
-	}
-	if c1.Duplicates != c2.Duplicates {
-		return false
-	}
-	if (c1.Placement == nil) != (c2.Placement == nil) {
-		return false
-	}
-	if c1.Placement != nil && c2.Placement != nil {
-		if !reflect.DeepEqual(c1.Placement, c2.Placement) {
-			return false
-		}
-	}
-	if (c1.Mirror == nil) != (c2.Mirror == nil) {
-		return false
-	}
-	if c1.Mirror != nil && c2.Mirror != nil {
-		if !reflect.DeepEqual(c1.Mirror, c2.Mirror) {
-			return false
-		}
-	}
-	if len(c1.Sources) != len(c2.Sources) {
-		return false
-	}
-	for i := range c1.Sources {
-		if (c1.Sources[i] == nil) != (c2.Sources[i] == nil) {
-			return false
-		}
-		if c1.Sources[i] != nil && c2.Sources[i] != nil {
-			if !reflect.DeepEqual(c1.Sources[i], c2.Sources[i]) {
-				return false
-			}
-		}
-	}
-	if c1.Sealed != c2.Sealed {
-		return false
-	}
-	if c1.DenyDelete != c2.DenyDelete {
-		return false
-	}
-	if c1.DenyPurge != c2.DenyPurge {
-		return false
-	}
-	if c1.AllowRollup != c2.AllowRollup {
-		return false
-	}
-	if c1.Compression != c2.Compression {
-		return false
-	}
-	if c1.FirstSeq != c2.FirstSeq {
-		return false
-	}
-	if (c1.SubjectTransform == nil) != (c2.SubjectTransform == nil) {
-		return false
-	}
-	if c1.SubjectTransform != nil && c2.SubjectTransform != nil {
-		if !reflect.DeepEqual(c1.SubjectTransform, c2.SubjectTransform) {
-			return false
-		}
-	}
-	if (c1.RePublish == nil) != (c2.RePublish == nil) {
-		return false
-	}
-	if c1.RePublish != nil && c2.RePublish != nil {
-		if !reflect.DeepEqual(c1.RePublish, c2.RePublish) {
-			return false
-		}
-	}
-	if c1.AllowDirect != c2.AllowDirect {
-		return false
-	}
-	if c1.MirrorDirect != c2.MirrorDirect {
-		return false
-	}
-	if !reflect.DeepEqual(c1.ConsumerLimits, c2.ConsumerLimits) {
-		return false
-	}
-	if !reflect.DeepEqual(c1.Metadata, c2.Metadata) {
-		return false
-	}
-	return true
+	return reflect.DeepEqual(c1, c2)
 }

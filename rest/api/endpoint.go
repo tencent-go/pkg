@@ -74,7 +74,7 @@ func (a *endpoint[I, O]) Name() *string {
 	if a.path != nil {
 		path = *a.path
 	}
-	action := "get"
+	var action string
 	switch a.Method() {
 	case MethodPost:
 		action = "create"
